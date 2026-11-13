@@ -1,0 +1,6 @@
+node_modules
+dist
+.env
+.env.local
+# Client source documents stay local (internal business material; repo is public)
+docs/*.docx
