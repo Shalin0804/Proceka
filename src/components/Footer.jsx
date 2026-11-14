@@ -1,6 +1,5 @@
 import { Link } from 'react-router-dom'
 import { ArrowUpRight } from 'lucide-react'
-import Logo from './Logo'
 import { InstagramIcon } from './Icons'
 import { company, navigation, instagramHref, emailHref, telHref, mapsHref } from '../data/site'
 import { collections } from '../data/collections'
@@ -12,7 +11,7 @@ export default function Footer() {
       <div className="container">
         <div className="site-footer__top">
           <div className="site-footer__brand">
-            <Logo className="logo--large" />
+            <p className="site-footer__name">{company.name}</p>
             <p className="site-footer__signature">{company.signature}</p>
           </div>
           <p className="site-footer__tagline">
