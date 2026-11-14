@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 import { ArrowUpRight } from 'lucide-react'
 import Logo from './Logo'
 import { InstagramIcon } from './Icons'
-import { company, navigation, instagramHref, isPlaceholder } from '../data/site'
+import { company, navigation, instagramHref, emailHref, telHref, mapsHref } from '../data/site'
 import { collections } from '../data/collections'
 import { scrollToTarget } from '../hooks/useLenis'
 
@@ -41,9 +41,13 @@ export default function Footer() {
           <div>
             <h2 className="site-footer__heading">Contact</h2>
             <ul>
-              <li>{company.location}</li>
-              <li>{isPlaceholder(company.email) ? company.email : <a href={`mailto:${company.email}`}>{company.email}</a>}</li>
-              <li>{isPlaceholder(company.phone) ? company.phone : <a href={`tel:${company.phone.replace(/\s/g, '')}`}>{company.phone}</a>}</li>
+              {company.phones.map((p) => <li key={p.tel}><a href={telHref(p)}>{p.display}</a></li>)}
+              <li><a href={emailHref}>{company.email}</a></li>
+              <li>
+                <a href={mapsHref} target="_blank" rel="noopener noreferrer" className="site-footer__address">
+                  {company.address.join(' ')}
+                </a>
+              </li>
             </ul>
           </div>
           <div>

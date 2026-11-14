@@ -18,7 +18,7 @@ When calling the claude-code MCP tool, always pass absolute paths under this pro
 
 ## Rules
 - Content source of truth: `docs/Company Profile 3.docx` (kept locally, not committed — ask the client for a copy). Never invent specs, certifications, awards, history, warehouses or contact details. `docs/Company Profile2.docx` is a generic template — only its Vision/Mission/Values themes are used.
-- Brand + contact details live only in `src/data/site.js`; collection copy in `src/data/collections.js`. Values in `[brackets]` are placeholders awaiting client confirmation.
+- Brand + contact details live only in `src/data/site.js`; collection copy in `src/data/collections.js`. Official contact details (2 phones/WhatsApp, `info@porceka.com`, Instagram, GST principal-place-of-business address in Borivali West) are confirmed — never add personal names or other contact details.
 - Images: `public/images/<name>-{900,1800}.webp`, rendered via `<Img name=… />`. Sources in `public/images/CREDITS.md`. They are representative photography, not Porceka products.
 - Animations: use the `data-reveal` / `data-parallax` attributes handled by `useScrollAnimations` (`src/animations/gsap.js`). Every effect must be a `from` tween so content is visible without JS and under `prefers-reduced-motion`.
 - Forms never fake success: submissions go through `src/lib/submitEnquiry.js` → `VITE_FORM_ENDPOINT`.

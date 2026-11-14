@@ -2,7 +2,7 @@ import { useEffect, useId, useState } from 'react'
 import { Check, Loader2 } from 'lucide-react'
 import { validate } from '../lib/validate'
 import { submitEnquiry, NotConfiguredError } from '../lib/submitEnquiry'
-import { company, isPlaceholder } from '../data/site'
+import { company } from '../data/site'
 
 /**
  * Generic enquiry form. `fields`: [{ name, label, type?, required?, options?, full?, autoComplete? }]
@@ -42,7 +42,7 @@ export default function EnquiryForm({ formName, fields, submitLabel, preset, ton
       setStatus('success')
       setValues(empty)
     } catch (err) {
-      const fallback = [company.email, company.phone].filter((v) => !isPlaceholder(v)).join(' or ')
+      const fallback = [company.email, ...company.phones.map((p) => p.display)].join(' or ')
       setErrorMsg(
         err instanceof NotConfiguredError
           ? `Online enquiries are being set up. ${fallback ? `Please reach us at ${fallback}.` : 'Please contact us directly in the meantime.'}`

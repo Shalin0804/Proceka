@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom'
 import { gsap } from '../animations/gsap'
 
 // CTA that leans toward the pointer. Renders a router Link when `to` is set,
-// otherwise a <button>. Pointer-only, so touch devices just get a normal button.
-export default function MagneticButton({ to, children, variant = 'solid', className = '', ...rest }) {
+// an <a> when `href` is set, otherwise a <button>. Pointer-only, so touch devices just get a normal button.
+export default function MagneticButton({ to, href, children, variant = 'solid', className = '', ...rest }) {
   const ref = useRef(null)
   const move = (e) => {
     if (e.pointerType !== 'mouse') return
@@ -21,5 +21,7 @@ export default function MagneticButton({ to, children, variant = 'solid', classN
       <span className="btn__arrow" aria-hidden="true">→</span>
     </>
   )
-  return to ? <Link to={to} {...props}>{inner}</Link> : <button type="button" {...props}>{inner}</button>
+  if (to) return <Link to={to} {...props}>{inner}</Link>
+  if (href) return <a href={href} {...props}>{inner}</a>
+  return <button type="button" {...props}>{inner}</button>
 }

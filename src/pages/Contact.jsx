@@ -1,12 +1,12 @@
 import { useState } from 'react'
-import { ArrowUpRight, Mail, MapPin, Phone } from 'lucide-react'
+import { ArrowUpRight, Mail, MapPin, MessageCircle, Phone } from 'lucide-react'
 import Seo from '../components/Seo'
 import Img from '../components/Img'
 import PageHero from '../components/PageHero'
 import EnquiryForm from '../components/EnquiryForm'
 import MagneticButton from '../components/MagneticButton'
 import { InstagramIcon } from '../components/Icons'
-import { company, enquiryTypes, instagramHref, isPlaceholder } from '../data/site'
+import { company, enquiryTypes, instagramHref, emailHref, telHref, whatsappHref, mapsHref, mapsEmbed } from '../data/site'
 import { useScrollAnimations } from '../animations/gsap'
 import { scrollToTarget } from '../hooks/useLenis'
 
@@ -28,10 +28,6 @@ const AUDIENCES = [
 
 const INSTAGRAM_TILES = ['marble-bath', 'mosaic-backsplash', 'hotel-room', 'marble-black', 'kitchen', 'custom-check']
 
-function ContactValue({ value, href }) {
-  return isPlaceholder(value) ? <span className="placeholder-value">{value}</span> : <a href={href}>{value}</a>
-}
-
 export default function Contact() {
   const [preset, setPreset] = useState(null)
   const ref = useScrollAnimations()
@@ -45,7 +41,7 @@ export default function Contact() {
     <div ref={ref}>
       <Seo
         title="Contact Us"
-        description="Let's bring your vision to life. Contact PORCEKA SURFACES LLP, Mumbai, for product enquiries, bulk orders, project partnerships, customised surfaces and international business."
+        description="Let's bring your vision to life. Contact PORCEKA SURFACES LLP, Borivali West, Mumbai, for product enquiries, bulk orders, project partnerships, customised surfaces and international business."
       />
       <PageHero
         label="Contact Us"
@@ -56,6 +52,7 @@ export default function Contact() {
       >
         <div className="btn-row" data-reveal="fade">
           <MagneticButton variant="light" onClick={() => scrollToTarget('#enquiry')}>Send an Enquiry</MagneticButton>
+          <MagneticButton variant="ghost" href={telHref(company.phones[0])}>Call Now</MagneticButton>
         </div>
       </PageHero>
 
@@ -64,24 +61,41 @@ export default function Contact() {
         <div className="container contact-info__grid" data-reveal="fade" data-stagger>
           <div className="contact-card">
             <MapPin size={20} strokeWidth={1.3} />
-            <h2>Studio</h2>
-            <p>{company.name}<br />{company.location}</p>
-          </div>
-          <div className="contact-card">
-            <Mail size={20} strokeWidth={1.3} />
-            <h2>Email</h2>
-            <p><ContactValue value={company.email} href={`mailto:${company.email}`} /></p>
+            <h2>Registered Office</h2>
+            <address className="contact-card__address">
+              <strong>{company.name}</strong>
+              {company.address.map((line) => <span key={line}>{line}</span>)}
+            </address>
           </div>
           <div className="contact-card">
             <Phone size={20} strokeWidth={1.3} />
             <h2>Phone / WhatsApp</h2>
-            <p><ContactValue value={company.phone} href={`tel:${company.phone.replace(/\s/g, '')}`} /></p>
+            {company.phones.map((p) => (
+              <p key={p.tel}>
+                <a href={telHref(p)}>{p.display}</a>
+                <a className="contact-card__wa" href={whatsappHref(p)} target="_blank" rel="noopener noreferrer" aria-label={`WhatsApp ${p.display}`}>
+                  <MessageCircle size={16} strokeWidth={1.4} />
+                </a>
+              </p>
+            ))}
+          </div>
+          <div className="contact-card">
+            <Mail size={20} strokeWidth={1.3} />
+            <h2>Email</h2>
+            <p><a href={emailHref}>{company.email}</a></p>
           </div>
           <div className="contact-card">
             <InstagramIcon size={20} />
             <h2>Instagram</h2>
-            <p><a href={instagramHref} target="_blank" rel="noopener noreferrer">{company.instagramName}</a></p>
+            <p><a href={instagramHref} target="_blank" rel="noopener noreferrer">Official Instagram Profile</a></p>
           </div>
+        </div>
+        <div className="container btn-row contact-actions" data-reveal="fade">
+          <a className="btn btn--outline-dark" href={telHref(company.phones[0])}><span className="btn__label"><Phone size={16} strokeWidth={1.4} /> Call Now</span></a>
+          <a className="btn btn--outline-dark" href={whatsappHref(company.phones[0])} target="_blank" rel="noopener noreferrer"><span className="btn__label"><MessageCircle size={16} strokeWidth={1.4} /> WhatsApp Us</span></a>
+          <a className="btn btn--outline-dark" href={emailHref}><span className="btn__label"><Mail size={16} strokeWidth={1.4} /> Send Email</span></a>
+          <a className="btn btn--outline-dark" href={instagramHref} target="_blank" rel="noopener noreferrer"><span className="btn__label"><InstagramIcon size={16} /> Instagram</span></a>
+          <a className="btn btn--outline-dark" href={mapsHref} target="_blank" rel="noopener noreferrer"><span className="btn__label"><MapPin size={16} strokeWidth={1.4} /> Get Directions</span></a>
         </div>
       </section>
 
@@ -128,15 +142,19 @@ export default function Contact() {
           <div>
             <p className="label" data-reveal="fade">Location</p>
             <h2 id="location-title" className="display" data-reveal="lines">Based in Mumbai.</h2>
-            <p data-reveal="fade">{company.location}. Serving design aspirations across India and international markets. Please get in touch to arrange a visit.</p>
-            <a className="link-arrow" href="https://www.google.com/maps/search/?api=1&query=Mumbai%2C%20Maharashtra%2C%20India" target="_blank" rel="noopener noreferrer" data-reveal="fade">
-              Open in Google Maps <ArrowUpRight size={15} strokeWidth={1.5} />
+            <address className="location__address" data-reveal="fade">
+              {company.name}<br />
+              {company.address.map((line) => <span key={line}>{line}<br /></span>)}
+            </address>
+            <p data-reveal="fade">Serving design aspirations across India and international markets. Please get in touch to arrange a visit.</p>
+            <a className="link-arrow" href={mapsHref} target="_blank" rel="noopener noreferrer" data-reveal="fade">
+              Get Directions <ArrowUpRight size={15} strokeWidth={1.5} />
             </a>
           </div>
           <div className="location__map" data-reveal="image">
             <iframe
-              title="Map of Mumbai, Maharashtra, India"
-              src="https://www.google.com/maps?q=Mumbai,+Maharashtra,+India&z=11&output=embed"
+              title="Map of Patel Shopping Centre, Borivali West, Mumbai"
+              src={mapsEmbed}
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
             />

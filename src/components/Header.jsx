@@ -4,7 +4,7 @@ import { Menu, X } from 'lucide-react'
 import Logo from './Logo'
 import MagneticButton from './MagneticButton'
 import { InstagramIcon } from './Icons'
-import { navigation, company, instagramHref } from '../data/site'
+import { navigation, company, instagramHref, emailHref, telHref } from '../data/site'
 import { gsap, prefersReducedMotion } from '../animations/gsap'
 import { getLenis } from '../hooks/useLenis'
 
@@ -87,6 +87,8 @@ export default function Header() {
         </nav>
         <div className="mobile-menu__meta">
           <p className="label label--light">{company.location}</p>
+          {company.phones.map((p) => <a key={p.tel} href={telHref(p)}>{p.display}</a>)}
+          <a href={emailHref}>{company.email}</a>
           <a href={instagramHref} target="_blank" rel="noopener noreferrer" className="mobile-menu__ig">
             <InstagramIcon /> {company.instagramName}
           </a>

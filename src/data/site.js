@@ -1,21 +1,38 @@
-// Single source for brand + contact details. Values in [brackets] are placeholders
-// from the company profile — replace them when the official details are confirmed.
+// Single source for brand + contact details.
+// Address is the Principal Place of Business on the GST registration certificate.
 export const company = {
   name: 'PORCEKA SURFACES LLP',
   tagline: 'Surfaces That Define Spaces.',
   statement: 'One Destination. Every Surface Possibility.',
   signature: 'Elegance, crafted to endure',
-  location: 'Mumbai, Maharashtra, India',
-  email: '[Official Email]',
-  phone: '[Official Number]',
+  location: 'Borivali West, Mumbai',
+  email: 'info@porceka.com',
+  phones: [
+    { display: '+91 98193 34489', tel: '+919819334489' },
+    { display: '+91 98926 07714', tel: '+919892607714' },
+  ],
+  address: [
+    '4th Floor, Office No. 401,',
+    'Patel Shopping Centre,',
+    'Chandavarkar Lane,',
+    'Near Borivali Police Station,',
+    'Borivali West, Mumbai,',
+    'Maharashtra – 400092, India.',
+  ],
   instagramName: 'Porceka Surfaces',
-  instagramUrl: null, // e.g. 'https://www.instagram.com/<handle>/'
+  instagramUrl: 'https://www.instagram.com/porcekasurfaces?utm_source=qr',
 }
 
-export const isPlaceholder = (value) => !value || value.startsWith('[')
-
-export const instagramHref =
-  company.instagramUrl ?? `https://www.instagram.com/explore/search/keyword/?q=${encodeURIComponent(company.instagramName)}`
+export const instagramHref = company.instagramUrl
+export const emailHref = `mailto:${company.email}`
+export const telHref = (phone) => `tel:${phone.tel}`
+export const whatsappHref = (phone) => `https://wa.me/${phone.tel.slice(1)}`
+export const mapsHref = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+  'Patel Shopping Centre, Chandavarkar Lane, Borivali West, Mumbai, Maharashtra 400092',
+)}`
+export const mapsEmbed = `https://www.google.com/maps?q=${encodeURIComponent(
+  'Patel Shopping Centre, Chandavarkar Lane, Borivali West, Mumbai, Maharashtra 400092',
+)}&z=16&output=embed`
 
 export const navigation = [
   { label: 'Home', to: '/' },
